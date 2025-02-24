@@ -1,3 +1,5 @@
+## Deployment nest js project with AWS EC2 and Docker
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -100,6 +102,59 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ## --------- code notes -------
 
+# Successfully completed aws docker deployment
+
+# Refer video:- https://www.youtube.com/watch?v=mqI5ZcV3prI
+
 # Docker
-  1. create: Dockerfile
-  2. create: docker-compose.ymal
+
+1. create: Dockerfile
+2. create: docker-compose.ymal
+
+# AWS
+
+1. create instance
+2. create security group
+   -- OPEN TERMINAL --
+3. cd Download
+4. chmod 400 "nest-aws-docker.pem"
+5. ssh -i "nest-aws-docker.pem" ubuntu@ec2-13-60-75-101.eu-north-1.compute.amazonaws.com
+
+-- DOCKER INSTALL ON UBUNDU SERVER (same terminal) 4. sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+     # Add the repository to Apt sources:
+     echo \
+       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+       $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+     sudo apt-get update
+
+5. sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+6. sudo docker run hello-world
+
+-- Create new folder on ubundu server 3. mkdir apps 4. cd apps/
+
+-- Clone your project on inside the apps folder 5. git clone https://github.com/MhammedAshfaq/nest-aws-docker.git 6. cd nest-aws-docker
+
+-- Create docker-compose.yaml on ubundu aws server and move our code docker-compose.yaml file to our ubundu server 7. nano docker-compose.yaml 8. ctr + s 9. ctr + x
+
+-- Now you need to enter sudo docker compose up -d 10. sudo docker compose up -d
+
+-- Check pushed docker project 11. sudo docker ps
+
+# check in postman via aws ip
+
+12. 13.60.75.101:3000
+
+# Docker Mongo
+
+1. open ubundu server
+2. cd apps
+3. cd nest-aws-docker
+4. sudo docker ps
+5. sudo docker exec -it 423b7630b8c0 bash // 423b7630b8c0 docker container id
+6. mongosh
